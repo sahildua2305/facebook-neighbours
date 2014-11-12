@@ -6,13 +6,14 @@ from bs4 import BeautifulSoup
 # fbxWelcomeBoxName
 
 base_url = "http://graph.facebook.com/"
-#user_name = raw_input("Enter your Facebook username: ")
-
-user_name = "iamsahildua"
-url = base_url + user_name
-
-response = requests.get(url);
-profile_id = json.loads(response.content)["id"]
+re = raw_input("Does your profile has a username? (y/n): ")
+if re == 'y':
+    user_name = raw_input("Enter your Facebook username: ")
+    url = base_url + user_name
+    response = requests.get(url);
+    profile_id = json.loads(response.content)["id"]
+elif re == 'n':
+    profile_id = raw_input("Enter your Facebook Profile ID: ")
 
 num = int(raw_input("How many neighbours would you like to find out? (Max 20) "))
 if num > 20:
@@ -29,5 +30,5 @@ else:
         name = soup.title.string.split(" | ")
         name = name[0]
         if name != "Profile Unavailable" and name != "Content Not Found" and name.encode('utf-8') != "सामग्री नहीं मिली":
-            print name.encode('utf-8'), temp
+            print name.encode('utf-8'), "https://www.facebook.com/profile.php?id="+str(temp)
             i+=1
