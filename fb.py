@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import urllib2
 import requests
 import json
@@ -12,4 +13,21 @@ url = base_url + user_name
 
 response = requests.get(url);
 profile_id = json.loads(response.content)["id"]
-print profile_id
+
+num = int(raw_input("How many neighbours would you like to find out? (Max 20) "))
+if num > 20:
+    print "Your desires are too high! Sorry!"
+else:
+    i=0
+    temp = int(profile_id)
+    while i<num:
+        temp += 1
+        fb_url = "https://www.facebook.com/profile.php?id=" + str(temp)
+        r = requests.get(fb_url)
+        html = r.content
+        soup = BeautifulSoup(html)
+        name = soup.title.string.split(" | ")
+        name = name[0]
+        if name != "Profile Unavailable" and name != "Content Not Found" and name.encode('utf-8') != "सामग्री नहीं मिली":
+            print name.encode('utf-8'), temp
+            i+=1
