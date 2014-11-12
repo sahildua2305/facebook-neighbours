@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import urllib2
+import sys
 import requests
 import json
 from bs4 import BeautifulSoup
@@ -14,6 +14,9 @@ if re == 'y':
     profile_id = json.loads(response.content)["id"]
 elif re == 'n':
     profile_id = raw_input("Enter your Facebook Profile ID: ")
+else:
+    print "Invalid Response. Try again!"
+    sys.exit()
 
 num = int(raw_input("How many neighbours would you like to find out? (Max 20) "))
 if num > 20:
